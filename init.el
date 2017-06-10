@@ -1,18 +1,9 @@
+
 ;;; *** EMACS CONFIGURATION ***
 ;;; Name:  VAEmacs 1.0
 ;;; By:    Viet Anh Nguyen 2017
 ;;; Email: vietanh@vietanhdev.com
 
-
-;;; MAXIMIZE WINDOWS ON START
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;;; WELCOME SCREEN
-(setq initial-scratch-message "
-
-              “Talk is cheap. Show me the code.” 
-                               ― Linus Torvalds ")
-(setq inhibit-startup-message t)
 
 ;;;;; PACKAGE MANAGER
 (require 'package)
@@ -21,15 +12,25 @@
 (package-initialize)
 
 
+;;; MAXIMIZE WINDOWS ON START
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;;; WELCOME SCREEN
+(setq initial-scratch-message "
+              “Talk is cheap. Show me the code.” 
+                               ― Linus Torvalds ")
+(setq inhibit-startup-message t)
+
 ;;;;; EMACS UI
 
 ; fontset
-(set-face-attribute 'default nil :font "DejaVu Sans Mono")
-(set-frame-font "DejaVu Sans Mono" nil t)
-(set-face-attribute 'default (selected-frame) :height 100)
+(set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
+(set-frame-font "DejaVu Sans Mono 16" nil t)
+(set-face-attribute 'default (selected-frame) :height 160)
 
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 ; turn off menubar, toolbar, scollbar
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -107,3 +108,40 @@ Repeated invocations toggle between the two most recently open buffers."
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
+
+;;;;; SMOOTH SCOLL
+(require 'sublimity)
+(require 'sublimity-scroll)
+(require 'sublimity-attractive)
+(sublimity-mode 1)
+
+
+;;;;; MARKDOWN MODE
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+;;;;; YAML MODE
+(add-hook 'yaml-mode-hook
+        (lambda ()
+            (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (pdf-tools yasnippet sublimity popup paganini-theme neotree multiple-cursors key-chord iedit company bind-key autopair))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
