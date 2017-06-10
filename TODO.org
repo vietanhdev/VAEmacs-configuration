@@ -1,0 +1,5 @@
+*** LEARN EMACS
+=> my plan to master Emacs editor
+
++ Master key binding
++ Learn Emacs's file manager
