@@ -1,9 +1,7 @@
-
 ;;; *** EMACS CONFIGURATION ***
 ;;; Name:  VAEmacs 1.0
 ;;; By:    Viet Anh Nguyen 2017
 ;;; Email: vietanh@vietanhdev.com
-
 
 ;;;;; PACKAGE MANAGER
 (require 'package)
@@ -64,6 +62,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
 
+;;;;; RESIZE BUFFER WINDOWS
+(global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-s-<down>") 'shrink-window)
+(global-set-key (kbd "C-s-<up>") 'enlarge-window)
+
+
 ;;;;; AUTOCOMPLETE
 ; start yasnippet with emacs
 (require 'yasnippet)
@@ -74,10 +79,15 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (require 'company-yasnippet)
 
+(require 'helm-config)
+(helm-mode 1)
+
 ;;;;; AUTO PAIR QUOTES, BRACES ...
 (require 'autopair)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
+
+
 
 ;;;;; MULTIPLE CURSORS
 (require 'multiple-cursors)
@@ -138,7 +148,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pdf-tools yasnippet sublimity popup paganini-theme neotree multiple-cursors key-chord iedit company bind-key autopair))))
+    (helm pdf-tools yasnippet sublimity popup paganini-theme neotree multiple-cursors key-chord iedit company bind-key autopair))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
