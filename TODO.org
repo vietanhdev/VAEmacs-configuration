@@ -1,5 +1,9 @@
-*** LEARN EMACS
+*** MASTER EMACS
 => my plan to master Emacs editor
 
 + Master key binding
 + Learn Emacs's file manager
+
+- Learn regexp search
+- Master shortcut keys
+- Setup some programming mode
