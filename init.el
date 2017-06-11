@@ -17,7 +17,7 @@
    - multiple-cursors
    - neotree
    - popup
-   - sublimity 
+   - sublimity
 "
 
 ;;;;; PACKAGE MANAGER
@@ -190,7 +190,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; FILE TREE VIEW
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+(global-set-key (kbd "C-x n o") 'neotree-toggle)
 
 
 ;;;;; SMOOTH SCOLL
@@ -198,6 +198,11 @@ Repeated invocations toggle between the two most recently open buffers."
 (require 'sublimity-scroll)
 (require 'sublimity-attractive)
 (sublimity-mode 1)
+
+
+;;;;; FLYCHECK - REALTIME SYNTAX CHECKING
+(global-flycheck-mode t)
+
 
 
 ;;;;; MARKDOWN MODE
@@ -209,7 +214,34 @@ Repeated invocations toggle between the two most recently open buffers."
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+
+;;;;; FLYCHECK  - REALTIME ERROR CHECKING
+
+
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+)
+
+
+
 ;;;;; YAML MODE
 (add-hook 'yaml-mode-hook
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flycheck yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop dash company autopair))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
