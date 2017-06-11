@@ -1,7 +1,7 @@
 "
 *** EMACS CONFIGURATION ***
- = Name:  VAEmacs 1.0
- = By:    Viet Anh Nguyen 2017
+ = Name:  VAEmacs 0.1 2017.06.11
+ = By:    Viet Anh Nguyen
  = Email: vietanh@vietanhdev.com
 
  + Packages:
