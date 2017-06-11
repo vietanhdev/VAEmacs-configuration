@@ -1,23 +1,8 @@
 "
 *** EMACS CONFIGURATION ***
- = Name:  VAEmacs 0.1 2017.06.11
- = By:    Viet Anh Nguyen
- = Email: vietanh@vietanhdev.com
-
- + Packages:
-   - theme: monokai
-   - use-package
-   - autocomlete: yasnippet, company, helm, autopair
-   - async
-   - bind-key
-   - dash
-   - diminish
-   - key-chord
-   - markdown-mode
-   - multiple-cursors
-   - neotree
-   - popup
-   - sublimity
+ Name:  VAEmacs 0.1 2017.06.11
+ By:    Viet Anh Nguyen
+ Email: vietanh@vietanhdev.com
 "
 
 ;;;;; PACKAGE MANAGER
@@ -91,7 +76,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (require 'yasnippet)
 (yas-global-mode 1)
 
-; autocomplete
+; autocomplete code
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -99,40 +84,33 @@ Repeated invocations toggle between the two most recently open buffers."
 (require 'company-yasnippet)
 
 ; Helm autocomplete framework for autocomplete everything
-(require 'helm-mode)
-(require 'helm-config)
-
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-; autoheight for the search windows
-(helm-autoresize-mode 1)
-(setq helm-autoresize-max-height 40)
-
-; use Helm for searching commands
-(global-set-key (kbd "M-x") 'helm-M-x)
-(setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
-
-; show kill-ring (deleted items)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
-; open helm-mini
-(global-set-key (kbd "C-x b") 'helm-mini)
-(setq helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match    t)
-
-; use Helm to find files
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-
-(setq helm-semantic-fuzzy-match t
-      helm-imenu-fuzzy-match    t)
+(use-package helm
+  :diminish helm-mode
+  :init
+  (progn
+    (require 'helm)
+    (require 'helm-config)
+    (setq helm-yas-display-key-on-candidate t
+	  helm-autoresize-mode 1
+	  helm-autoresize-max-height 40
+	  helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
+	  helm-buffers-fuzzy-matching t
+	  helm-recentf-fuzzy-match    t
+	  helm-semantic-fuzzy-match t
+	  helm-imenu-fuzzy-match    t )
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+    (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+  )
+  :bind (("C-c h" . helm-command-prefix)
+	 ("C-i" . helm-execute-persistent-action)
+	 ("C-z" . helm-select-action)
+	 ("M-x" . helm-M-x) ; use Helm for searching commands
+	 ("M-y" . helm-show-kill-ring) ; show kill-ring (deleted items)
+	 ("C-x b" . helm-mini) ; manage buffers
+	 ("C-x C-f" . helm-find-files) ; open files
+  )
+)
 
 
 ; replace isearch
@@ -184,9 +162,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (setq-default message-log-max nil)
 (kill-buffer "*Messages*")
 
-;;;;; AUTOCOMPLETE EVERYTHING
-;(require 'ido)
-;(ido-mode t)
 
 ;;;;; FILE TREE VIEW
 (require 'neotree)
@@ -231,17 +206,3 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'yaml-mode-hook
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (flycheck yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop dash company autopair))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
