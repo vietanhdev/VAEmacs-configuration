@@ -7,7 +7,7 @@
 ;; Maintainer: Jason R. Blevins <jrblevin@sdf.org>
 ;; Created: May 24, 2007
 ;; Version: 2.3-dev
-;; Package-Version: 20170609.1951
+;; Package-Version: 20170610.602
 ;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: http://jblevins.org/projects/markdown-mode/
@@ -7689,10 +7689,11 @@ LANG is a string, and the returned major mode is a symbol."
       (save-match-data
         (let* ((start (match-beginning 0))
                (end (match-end 0))
+               ;; Find positions outside opening and closing backquotes.
                (bol-prev (progn (goto-char start)
-                                (if (bolp) (point-at-bol 0) start)))
+                                (if (bolp) (point-at-bol 0) (point-at-bol))))
                (eol-next (progn (goto-char end)
-                                (if (eolp) end (point-at-bol 2))))
+                                (if (eolp) (point-at-eol 2) (point-at-eol))))
                lang)
           (if (and markdown-fontify-code-blocks-natively
                    (setq lang (markdown-code-block-lang)))

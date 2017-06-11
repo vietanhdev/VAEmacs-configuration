@@ -79,7 +79,64 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (require 'company-yasnippet)
 
+
+;;;;; HELM FOR AUTOCOMPLETE ANYTHING
+(require 'helm-mode)
 (require 'helm-config)
+;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+; autoheight for the search windows
+(helm-autoresize-mode 1)
+(setq helm-autoresize-max-height 40)
+
+; use Helm for searching commands
+(global-set-key (kbd "M-x") 'helm-M-x)
+(setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
+
+; show kill-ring (deleted items)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+; open helm-mini
+(global-set-key (kbd "C-x b") 'helm-mini)
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t)
+
+; use Helm to find files
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+(setq helm-semantic-fuzzy-match t
+      helm-imenu-fuzzy-match    t)
+
+
+; replace isearch
+;; C-s in a buffer: open helm-swoop with empty search field
+(global-set-key (kbd "C-s") 'helm-swoop)
+(with-eval-after-load 'helm-swoop
+    (setq helm-swoop-pre-input-function
+        (lambda () nil)))
+
+;; C-s in helm-swoop with empty search field: activate previous search.
+;; C-s in helm-swoop with non-empty search field: go to next match.
+(with-eval-after-load 'helm-swoop
+    (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
+
+(defun tl/helm-swoop-C-s ()
+    (interactive)
+    (if (boundp 'helm-swoop-pattern)
+            (if (equal helm-swoop-pattern "")
+                    (previous-history-element 1)
+                (helm-next-line))
+    (helm-next-line)
+    ))
+
 (helm-mode 1)
 
 ;;;;; AUTO PAIR QUOTES, BRACES ...
@@ -111,8 +168,8 @@ Repeated invocations toggle between the two most recently open buffers."
 (kill-buffer "*Messages*")
 
 ;;;;; AUTOCOMPLETE EVERYTHING
-(require 'ido)
-(ido-mode t)
+;(require 'ido)
+;(ido-mode t)
 
 ;;;;; FILE TREE VIEW
 (require 'neotree)
@@ -140,3 +197,17 @@ Repeated invocations toggle between the two most recently open buffers."
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (helm-swoop counsel ivy yasnippet use-package sublimity paganini-theme neotree multiple-cursors markdown-mode key-chord iedit company autopair))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

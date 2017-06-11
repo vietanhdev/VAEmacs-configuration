@@ -376,9 +376,9 @@ A function that takes a directory name as only arg."
     (define-key map (kbd "C-]")           'helm-ff-run-toggle-basename)
     (define-key map (kbd "C-x C-f")       'helm-ff-run-locate)
     (define-key map (kbd "C-x C-d")       'helm-ff-run-browse-project)
-    (define-key map (kbd "C-x C-q")       'helm-ff-run-marked-files-in-dired)
     (define-key map (kbd "C-x r m")       'helm-ff-bookmark-set)
     (define-key map (kbd "C-x r b")       'helm-find-files-toggle-to-bookmark)
+    (define-key map (kbd "C-x C-q")       'helm-ff-run-marked-files-in-dired)
     (define-key map (kbd "C-s")           'helm-ff-run-grep)
     (define-key map (kbd "M-g s")         'helm-ff-run-grep)
     (define-key map (kbd "M-g p")         'helm-ff-run-pdfgrep)
@@ -492,8 +492,8 @@ Don't set it directly, use instead `helm-ff-auto-update-initial-value'.")
    "Find File" 'helm-find-file-or-marked
    "Find file in Dired" 'helm-point-file-in-dired
    "View file" 'view-file
-   "Marked files in dired `C-x C-q, C-u wdired'" 'helm-marked-files-in-dired
    "Query replace fnames on marked `M-%'" 'helm-ff-query-replace-on-marked
+   "Marked files in dired" 'helm-marked-files-in-dired
    "Query replace contents on marked" 'helm-ff-query-replace
    "Query replace regexp contents on marked" 'helm-ff-query-replace-regexp
    "Attach file(s) to mail buffer" 'helm-ff-mail-attach-files
@@ -1760,6 +1760,7 @@ and should be used carefully elsewhere, or not at all, using
   "Open a dired buffer with only marked files.
 
 With a prefix arg toggle dired buffer to wdired mode."
+  (advice-add 'wdired-finish-edit :override #'helm--advice-wdired-finish-edit)
   (let* ((marked (helm-marked-candidates))
          (current (car marked)))
     (unless (and ffap-url-regexp
