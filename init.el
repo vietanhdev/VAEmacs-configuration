@@ -1,14 +1,30 @@
-;;; *** EMACS CONFIGURATION ***
-;;; Name:  VAEmacs 1.0
-;;; By:    Viet Anh Nguyen 2017
-;;; Email: vietanh@vietanhdev.com
+"
+*** EMACS CONFIGURATION ***
+ = Name:  VAEmacs 1.0
+ = By:    Viet Anh Nguyen 2017
+ = Email: vietanh@vietanhdev.com
+
+ + Packages:
+   - theme: monokai
+   - use-package
+   - autocomlete: yasnippet, company, helm, autopair
+   - async
+   - bind-key
+   - dash
+   - diminish
+   - key-chord
+   - markdown-mode
+   - multiple-cursors
+   - neotree
+   - popup
+   - sublimity 
+"
 
 ;;;;; PACKAGE MANAGER
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-
 
 ;;; MAXIMIZE WINDOWS ON START
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -33,7 +49,7 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ; load theme
-(load-theme 'paganini t)
+(load-theme 'monokai t)
 
 ; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
@@ -42,26 +58,27 @@
 (global-set-key (kbd "C-c j") 'goto-line) 
 (global-set-key [f5] 'compile)
 
-; MANAGE BUFFER
+;;;;; MANAGE BUFFER
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
+; switch buffer
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define-global "jj" 'switch-to-previous-buffer)
 (key-chord-define-global "kk" 'next-buffer)
 
-;;;;; MOVE BETWEEN WINDOWS
+; mover between windows
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
 
-;;;;; RESIZE BUFFER WINDOWS
+; resize windows
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
@@ -69,19 +86,22 @@ Repeated invocations toggle between the two most recently open buffers."
 
 
 ;;;;; AUTOCOMPLETE
-; start yasnippet with emacs
+
+; snippets
 (require 'yasnippet)
 (yas-global-mode 1)
 
+; autocomplete
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 
+; use company with yasnippet
 (require 'company-yasnippet)
 
-
-;;;;; HELM FOR AUTOCOMPLETE ANYTHING
+; Helm autocomplete framework for autocomplete everything
 (require 'helm-mode)
 (require 'helm-config)
+
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
@@ -193,18 +213,3 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'yaml-mode-hook
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (helm-swoop counsel ivy yasnippet use-package sublimity paganini-theme neotree multiple-cursors markdown-mode key-chord iedit company autopair))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
