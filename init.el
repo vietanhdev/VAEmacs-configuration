@@ -62,13 +62,11 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
-
 ; resize windows
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
 (global-set-key (kbd "C-s-<up>") 'enlarge-window)
-
 
 ;;;;; AUTOCOMPLETE
 
@@ -77,11 +75,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (yas-global-mode 1)
 
 ; autocomplete code
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+(use-package company
+  :ensure t
+  :defer t
+  :init (global-company-mode t))
 
 ; use company with yasnippet
-(require 'company-yasnippet)
+;(require 'company-yasnippet)
 
 ; Helm autocomplete framework for autocomplete everything
 (use-package helm
@@ -101,7 +101,25 @@ Repeated invocations toggle between the two most recently open buffers."
     (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
     (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-  )
+
+    ;;; for helm swoop
+    (with-eval-after-load 'helm-swoop
+    (setq helm-swoop-pre-input-function
+        (lambda () nil)))
+
+    ;; C-s in helm-swoop with empty search field: activate previous search.
+    ;; C-s in helm-swoop with non-empty search field: go to next match.
+    (with-eval-after-load 'helm-swoop
+        (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
+
+    (defun tl/helm-swoop-C-s ()
+        (interactive)
+        (if (boundp 'helm-swoop-pattern)
+            (if (equal helm-swoop-pattern "")
+                    (previous-history-element 1)
+                (helm-next-line))
+        (helm-next-line)
+     )))
   :bind (("C-c h" . helm-command-prefix)
 	 ("C-i" . helm-execute-persistent-action)
 	 ("C-z" . helm-select-action)
@@ -109,32 +127,10 @@ Repeated invocations toggle between the two most recently open buffers."
 	 ("M-y" . helm-show-kill-ring) ; show kill-ring (deleted items)
 	 ("C-x b" . helm-mini) ; manage buffers
 	 ("C-x C-f" . helm-find-files) ; open files
+	 ("C-s" . helm-swoop)
   )
 )
 
-
-; replace isearch
-;; C-s in a buffer: open helm-swoop with empty search field
-(global-set-key (kbd "C-s") 'helm-swoop)
-(with-eval-after-load 'helm-swoop
-    (setq helm-swoop-pre-input-function
-        (lambda () nil)))
-
-;; C-s in helm-swoop with empty search field: activate previous search.
-;; C-s in helm-swoop with non-empty search field: go to next match.
-(with-eval-after-load 'helm-swoop
-    (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
-
-(defun tl/helm-swoop-C-s ()
-    (interactive)
-    (if (boundp 'helm-swoop-pattern)
-            (if (equal helm-swoop-pattern "")
-                    (previous-history-element 1)
-                (helm-next-line))
-    (helm-next-line)
-    ))
-
-(helm-mode 1)
 
 ;;;;; AUTO PAIR QUOTES, BRACES ...
 (require 'autopair)
@@ -142,15 +138,14 @@ Repeated invocations toggle between the two most recently open buffers."
 (setq autopair-autowrap t)
 
 ;;;;; MULTIPLE CURSORS
-(require 'multiple-cursors)
-(global-set-key (kbd "C-x c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-(global-unset-key (kbd "C-S-<down-mouse-1>"))
-(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
-
+(use-package multiple-cursors
+  :bind (("C-x c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)
+	 ("C-S-<down-mouse-1>" . mc/add-cursor-on-click)
+       )
+)
 
 ;;;;; ZOOM IN/OUT
 (global-set-key (kbd "C-x C-+") 'text-scale-increase)
@@ -175,10 +170,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (sublimity-mode 1)
 
 
-;;;;; FLYCHECK - REALTIME SYNTAX CHECKING
-(global-flycheck-mode t)
-
-
+;;;;; FLYCHECK  - REALTIME ERROR CHECKING
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+)
 
 ;;;;; MARKDOWN MODE
 (use-package markdown-mode
@@ -188,19 +186,6 @@ Repeated invocations toggle between the two most recently open buffers."
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
-
-
-;;;;; FLYCHECK  - REALTIME ERROR CHECKING
-
-
-(use-package flycheck
-  :ensure t
-  :init
-  (global-flycheck-mode)
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
-)
-
-
 
 ;;;;; YAML MODE
 (add-hook 'yaml-mode-hook
