@@ -35,9 +35,8 @@
 ; load theme
 (load-theme 'paganini t)
 
-; display line number
-(global-linum-mode t)
-
+; display line number when programming
+(add-hook 'prog-mode-hook 'linum-mode)
 
 ;;;;; SHORTCUT KEYS
 (global-set-key (kbd "C-c j") 'goto-line) 
@@ -143,8 +142,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (require 'autopair)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
-
-
 
 ;;;;; MULTIPLE CURSORS
 (require 'multiple-cursors)
