@@ -7,8 +7,7 @@
 
 ;;;;; PACKAGE MANAGER
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 ;;; install use-package if not installed
@@ -23,19 +22,19 @@
 
 ;;;;; WELCOME SCREEN
 (setq initial-scratch-message "
-              “Talk is cheap. Show me the code.” 
+               Talk is cheap. Show me the code.
                                ― Linus Torvalds ")
 (setq inhibit-startup-message t)
 
 ;;;;; EMACS UI
 
-; fontset
+;;; fontset
 (set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
 (set-frame-font "DejaVu Sans Mono 16" nil t)
 (set-face-attribute 'default (selected-frame) :height 160)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-; turn off menubar, toolbar, scollbar
+;;; turn off menubar, toolbar, scollbar
 ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -47,7 +46,7 @@
 (use-package all-the-icons)
 
 
-; display line number when programming
+;;; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
 
 ;;;;; SHORTCUT KEYS
@@ -61,7 +60,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-; switch buffer
+;;; switch buffer
 (use-package key-chord
   :init
   (progn
@@ -69,13 +68,13 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "jj" 'switch-to-previous-buffer)
     (key-chord-define-global "kk" 'next-buffer)))
 
-; mover between windows
+;;; mover between windows
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
-; resize windows
+;;; resize windows
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
@@ -83,20 +82,18 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; AUTOCOMPLETE
 
-; snippets
+;;; snippets
 (use-package yasnippet
   :defer t
   :init (yas-global-mode 1))
 
-; autocomplete code
+;;; autocomplete code
 (use-package company
   :defer t
   :init (global-company-mode t))
 
-; use company with yasnippet
-;(require 'company-yasnippet)
 
-; Helm autocomplete framework for autocomplete everything
+;;; Helm autocomplete framework for autocomplete everything
 (use-package helm
   :diminish helm-mode
   :init
@@ -120,8 +117,8 @@ Repeated invocations toggle between the two most recently open buffers."
     (setq helm-swoop-pre-input-function
         (lambda () nil)))
 
-    ;; C-s in helm-swoop with empty search field: activate previous search.
-    ;; C-s in helm-swoop with non-empty search field: go to next match.
+    ;;; C-s in helm-swoop with empty search field: activate previous search.
+    ;;; C-s in helm-swoop with non-empty search field: go to next match.
     (with-eval-after-load 'helm-swoop
         (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
 
@@ -132,7 +129,16 @@ Repeated invocations toggle between the two most recently open buffers."
                     (previous-history-element 1)
                 (helm-next-line))
         (helm-next-line)
-     )))
+	)))
+
+    ;;; backspace two times to return to previous folder
+    (defun fu/helm-find-files-navigate-back (orig-fun &rest args)
+      (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
+        (helm-find-files-up-one-level 1)
+        (apply orig-fun args)))
+        (advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
+
+  
   :bind (("C-c h" . helm-command-prefix)
 	 ("C-i" . helm-execute-persistent-action)
 	 ("C-z" . helm-select-action)
@@ -207,17 +213,3 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'yaml-mode-hook
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (flycheck yasnippet use-package sublimity pkg-info neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop exec-path-from-shell dash company autopair))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
