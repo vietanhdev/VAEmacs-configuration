@@ -2,5 +2,8 @@
 
 ### How to use?
 
-- Copy all of this repo to `~/.emacs.d`.
-- Delete `~/.emacs` configuration file.
+``` bash
+rm -r ~/.emacs.d
+rm ~/.emacs
+git clone https://github.com/vietanhdev/VAEmacs-configuration.git ~/.emacs.d
+```
