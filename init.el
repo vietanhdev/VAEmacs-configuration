@@ -11,10 +11,17 @@
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-;;; MAXIMIZE WINDOWS ON START
+;;; install use-package if not installed
+(unless (package-installed-p 'use-package)
+   (package-install 'use-package))
+
+;;;;; NOTICE: uncomment following line to download needed packages automatically
+;;; (setq use-package-always-ensure t)
+
+;;;;; MAXIMIZE WINDOWS ON START
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;;; WELCOME SCREEN
+;;;;; WELCOME SCREEN
 (setq initial-scratch-message "
               “Talk is cheap. Show me the code.” 
                                ― Linus Torvalds ")
@@ -34,7 +41,11 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ; load theme
-(load-theme 'monokai t)
+(use-package monokai-theme
+  :init (load-theme 'monokai t))
+
+(use-package all-the-icons)
+
 
 ; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
@@ -51,10 +62,12 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 ; switch buffer
-(require 'key-chord)
-(key-chord-mode 1)
-(key-chord-define-global "jj" 'switch-to-previous-buffer)
-(key-chord-define-global "kk" 'next-buffer)
+(use-package key-chord
+  :init
+  (progn
+    (key-chord-mode 1)
+    (key-chord-define-global "jj" 'switch-to-previous-buffer)
+    (key-chord-define-global "kk" 'next-buffer)))
 
 ; mover between windows
 (global-set-key (kbd "C-c <left>")  'windmove-left)
@@ -71,12 +84,12 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;;;; AUTOCOMPLETE
 
 ; snippets
-(require 'yasnippet)
-(yas-global-mode 1)
+(use-package yasnippet
+  :defer t
+  :init (yas-global-mode 1))
 
 ; autocomplete code
 (use-package company
-  :ensure t
   :defer t
   :init (global-company-mode t))
 
@@ -133,9 +146,11 @@ Repeated invocations toggle between the two most recently open buffers."
 
 
 ;;;;; AUTO PAIR QUOTES, BRACES ...
-(require 'autopair)
-(autopair-global-mode 1)
-(setq autopair-autowrap t)
+(use-package autopair
+  :init
+  (progn
+    (autopair-global-mode 1)
+    (setq autopair-autowrap t)))
 
 ;;;;; MULTIPLE CURSORS
 (use-package multiple-cursors
@@ -159,15 +174,16 @@ Repeated invocations toggle between the two most recently open buffers."
 
 
 ;;;;; FILE TREE VIEW
-(require 'neotree)
-(global-set-key (kbd "C-x n o") 'neotree-toggle)
+(use-package neotree
+  :bind ("C-x n o" . neotree-toggle))
 
 
 ;;;;; SMOOTH SCOLL
-(require 'sublimity)
-(require 'sublimity-scroll)
-(require 'sublimity-attractive)
-(sublimity-mode 1)
+(use-package sublimity
+  :config (progn
+	    (use-package sublimity-scroll)
+	    (use-package sublimity-attractive))
+  :init (sublimity-mode 1))
 
 
 ;;;;; FLYCHECK  - REALTIME ERROR CHECKING
@@ -191,3 +207,17 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'yaml-mode-hook
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flycheck yasnippet use-package sublimity pkg-info neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop exec-path-from-shell dash company autopair))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
