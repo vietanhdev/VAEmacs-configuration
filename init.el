@@ -1,3 +1,4 @@
+
 "
 *** EMACS CONFIGURATION ***
  Name:  VAEmacs 0.1 2017.06.11
@@ -42,20 +43,12 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-; load theme
+;;; load theme
 (use-package monokai-theme
   :init (load-theme 'monokai t))
 
-; load icons
+;;; load icons
 (use-package all-the-icons)
-(use-package spaceline
-  :init (progn
-	  (require 'spaceline-config)
-          (spaceline-spacemacs-theme)
-	  (use-package spaceline-all-the-icons
-             :after spaceline
-             :config (spaceline-all-the-icons-theme))
-	  ))
 
 
 ;;; display line number when programming
@@ -191,8 +184,8 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; FILE TREE VIEW
 (use-package neotree
-  :init (progn
-	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+; :init (progn
+;	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
   :bind ("C-x n o" . neotree-toggle))
 
 
@@ -224,7 +217,10 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;;;; YAML MODE
 (add-hook 'yaml-mode-hook
         (lambda ()
-            (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+	  (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -232,7 +228,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (spaceline-all-the-icons spaceline yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop flycheck company chess autopair all-the-icons))))
+    (telephone-line spaceline-all-the-icons spaceline yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop flycheck company chess autopair all-the-icons))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
