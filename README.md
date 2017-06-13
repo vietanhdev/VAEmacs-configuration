@@ -8,7 +8,9 @@
 ######## ##     ## ##     ##  ######   ######
 ~~~
 
-EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN
+
+# EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN
+
 [https://vietanhdev.com](https://vietanhdev.com)
 
 #### Some packages inside:
