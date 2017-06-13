@@ -68,7 +68,7 @@ https://vietanhdev.com
 ;;; confirm y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;;;;; SMOOTH SCOLL
+;;; smooth-scoll and attractive mode
 (use-package sublimity
   :config (progn
 	    (use-package sublimity-scroll)
@@ -96,6 +96,20 @@ https://vietanhdev.com
 ;;; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
 (setq linum-format "%4d \u2502 ")
+
+;; zoom in/ zoom out
+(global-set-key (kbd "C-x C-+") 'text-scale-increase)
+(global-set-key (kbd "C-x C--") 'text-scale-decrease)
+(global-set-key [C-mouse-4] '(lambda () (interactive) (text-scale-increase 1)))
+(global-set-key [C-mouse-5] '(lambda () (interactive) (text-scale-decrease 1)))
+
+
+;;; dir. tree view
+(use-package neotree
+ :init (progn
+	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+ :bind ("C-x n o" . neotree-toggle))
+
 
 ;;;;; SHORTCUT KEYS
 (global-set-key (kbd "C-c j") 'goto-line) 
@@ -216,19 +230,6 @@ Repeated invocations toggle between the two most recently open buffers."
 	 ("C-S-<down-mouse-1>" . mc/add-cursor-on-click)
        )
 )
-
-;;;;; ZOOM IN/OUT
-(global-set-key (kbd "C-x C-+") 'text-scale-increase)
-(global-set-key (kbd "C-x C--") 'text-scale-decrease)
-(global-set-key [C-mouse-4] '(lambda () (interactive) (text-scale-increase 1)))
-(global-set-key [C-mouse-5] '(lambda () (interactive) (text-scale-decrease 1)))
-
-
-;;;;; FILE TREE VIEW
-(use-package neotree
- :init (progn
-	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
-  :bind ("C-x n o" . neotree-toggle))
 
 
 ;;;;; FLYCHECK  - REALTIME ERROR CHECKING
