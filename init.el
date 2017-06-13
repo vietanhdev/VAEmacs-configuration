@@ -20,18 +20,60 @@
 
 ;;; install use-package if not installed
 (unless (package-installed-p 'use-package)
-   (package-install 'use-package))
+  (package-install 'use-package))
 
 ;;;;; NOTICE: uncomment following line to download needed packages automatically
 ;(setq use-package-always-ensure t)
 
-;;;;; WELCOME SCREEN
+
 (setq initial-scratch-message "
-               Talk is cheap. Show me the code.
-                               ― Linus Torvalds ")
+
+
+~~~
+
+######## ##     ##    ###     ######   ######
+##       ###   ###   ## ##   ##    ## ##    ##
+##       #### ####  ##   ##  ##       ##
+######   ## ### ## ##     ## ##        ######
+##       ##     ## ######### ##             ##
+##       ##     ## ##     ## ##    ## ##    ##
+######## ##     ## ##     ##  ######   ###### 
+
+EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN
+https://vietanhdev.com
+
+~~~
+
+
+#### Some packages inside:
+
+- Theme: monokai
+- Autocomplete: helm, company, yasnippet, autopair
+- Realtime error checking: flycheck
+- UX: sumlimity, neotree, all-the-icons
+
+#### For Vietnamese input method:
+
+- Use C-\\ and type ‘vietnamese-telex‘ / ‘vietnamese-viqr‘ / ‘vietnamese-vni‘
+- Use C-\\ to toggle input method.
+
+")
+
 (setq inhibit-startup-message t)
+(setq initial-major-mode 'markdown-mode)
+
 
 ;;;;; EMACS UI
+
+;;; confirm y/n instead of yes/no
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;;;;; SMOOTH SCOLL
+(use-package sublimity
+  :config (progn
+	    (use-package sublimity-scroll)
+	    (use-package sublimity-attractive))
+  :init (sublimity-mode 1))
 
 ;;; fontset
 (set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
@@ -53,8 +95,7 @@
 
 ;;; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
-
-
+(setq linum-format "%4d \u2502 ")
 
 ;;;;; SHORTCUT KEYS
 (global-set-key (kbd "C-c j") 'goto-line) 
@@ -102,6 +143,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;; Helm autocomplete framework for autocomplete everything
 (use-package helm
+  :defer t
   :diminish helm-mode
   :init
   (progn
@@ -184,17 +226,9 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; FILE TREE VIEW
 (use-package neotree
-; :init (progn
-;	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+ :init (progn
+	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
   :bind ("C-x n o" . neotree-toggle))
-
-
-;;;;; SMOOTH SCOLL
-(use-package sublimity
-  :config (progn
-	    (use-package sublimity-scroll)
-	    (use-package sublimity-attractive))
-  :init (sublimity-mode 1))
 
 
 ;;;;; FLYCHECK  - REALTIME ERROR CHECKING
@@ -218,9 +252,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'yaml-mode-hook
         (lambda ()
 	  (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -228,7 +259,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (telephone-line spaceline-all-the-icons spaceline yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop flycheck company chess autopair all-the-icons))))
+    (dashboard yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop flycheck company chess autopair all-the-icons))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
