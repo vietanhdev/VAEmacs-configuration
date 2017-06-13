@@ -3,7 +3,14 @@
  Name:  VAEmacs 0.1 2017.06.11
  By:    Viet Anh Nguyen
  Email: vietanh@vietanhdev.com
+
+*** Notice:
+- For Vietnamese input method:
+    use C-\ > type 'vietnamese-telex' or the method you prefer. > Use C-\ to toggle input method.
 "
+
+;;;;; MAXIMIZE WINDOWS ON START
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;;;;; PACKAGE MANAGER
 (require 'package)
@@ -15,10 +22,7 @@
    (package-install 'use-package))
 
 ;;;;; NOTICE: uncomment following line to download needed packages automatically
-;;; (setq use-package-always-ensure t)
-
-;;;;; MAXIMIZE WINDOWS ON START
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;(setq use-package-always-ensure t)
 
 ;;;;; WELCOME SCREEN
 (setq initial-scratch-message "
@@ -33,7 +37,6 @@
 (set-frame-font "DejaVu Sans Mono 16" nil t)
 (set-face-attribute 'default (selected-frame) :height 160)
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;;; turn off menubar, toolbar, scollbar
 ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -43,11 +46,22 @@
 (use-package monokai-theme
   :init (load-theme 'monokai t))
 
+; load icons
 (use-package all-the-icons)
+(use-package spaceline
+  :init (progn
+	  (require 'spaceline-config)
+          (spaceline-spacemacs-theme)
+	  (use-package spaceline-all-the-icons
+             :after spaceline
+             :config (spaceline-all-the-icons-theme))
+	  ))
 
 
 ;;; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
+
+
 
 ;;;;; SHORTCUT KEYS
 (global-set-key (kbd "C-c j") 'goto-line) 
@@ -98,8 +112,8 @@ Repeated invocations toggle between the two most recently open buffers."
   :diminish helm-mode
   :init
   (progn
-    (require 'helm)
-    (require 'helm-config)
+    (use-package helm)
+    (use-package helm-config)
     (setq helm-yas-display-key-on-candidate t
 	  helm-autoresize-mode 1
 	  helm-autoresize-max-height 40
@@ -113,9 +127,9 @@ Repeated invocations toggle between the two most recently open buffers."
     (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
     ;;; for helm swoop
-    (with-eval-after-load 'helm-swoop
+    (use-package helm-swoop)
     (setq helm-swoop-pre-input-function
-        (lambda () nil)))
+        (lambda () nil))
 
     ;;; C-s in helm-swoop with empty search field: activate previous search.
     ;;; C-s in helm-swoop with non-empty search field: go to next match.
@@ -174,13 +188,11 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key [C-mouse-4] '(lambda () (interactive) (text-scale-increase 1)))
 (global-set-key [C-mouse-5] '(lambda () (interactive) (text-scale-decrease 1)))
 
-;;;;; NO MESSAGE BUFFER
-(setq-default message-log-max nil)
-(kill-buffer "*Messages*")
-
 
 ;;;;; FILE TREE VIEW
 (use-package neotree
+  :init (progn
+	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
   :bind ("C-x n o" . neotree-toggle))
 
 
@@ -213,3 +225,17 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'yaml-mode-hook
         (lambda ()
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (spaceline-all-the-icons spaceline yasnippet use-package sublimity neotree multiple-cursors monokai-theme markdown-mode key-chord helm-swoop flycheck company chess autopair all-the-icons))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
