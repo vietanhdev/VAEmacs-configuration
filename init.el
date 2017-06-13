@@ -1,4 +1,3 @@
-
 "
 *** EMACS CONFIGURATION ***
  Name:  VAEmacs 0.1 2017.06.11
@@ -18,39 +17,43 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-;;; install use-package if not installed
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
 ;;;;; NOTICE: uncomment following line to download needed packages automatically
-;(setq use-package-always-ensure t)
+(setq use-package-always-ensure t)
 
 
 (setq initial-scratch-message "
-
-
 ~~~
-
-######## ##     ##    ###     ######   ######
-##       ###   ###   ## ##   ##    ## ##    ##
-##       #### ####  ##   ##  ##       ##
-######   ## ### ## ##     ## ##        ######
-##       ##     ## ######### ##             ##
-##       ##     ## ##     ## ##    ## ##    ##
-######## ##     ## ##     ##  ######   ###### 
-
-EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN
-https://vietanhdev.com
-
+‘------::--‘                ‘-------.‘      
+   ‘::::yyyosos+:--:/          .:--:/oooyso-::     ######## ##     ##    ###     ######   ######
+  -/-sNy/::-.‘‘.---.            ...--..--:odh:/.   ##       ###   ###   ## ##   ##    ## ##    ##
+ -:‘hNo:-        .-------‘ ‘----...       ::dm.:.  ##       #### ####  ##   ##  ##       ##
+ + :Nd/.       --:ohmNmdo:/yosdmds:-.      :+Mo /  ######   ## ### ## ##     ## ##        ######
+ / oMy+      -::hMMMMMMMMN. + +mMMMh::‘    -/Nh +  ##       ##     ## ######### ##             ##
+ + /Nd/-   ./:yNmmhsooso:-:. --:shydNo:-   /+No +  ##       ##     ## ##     ## ##    ## ##    ##
+ +‘.dNy::-/oyy/‘  ‘/oh‘  -/‘-s‘/+:. .yms+-/omN-‘+  ######## ##     ## ##     ##  ######   ######
+ ‘+‘+mMNmyNm:    ‘/‘/.‘.-- :  .d-‘/   +MMmMNm+./
+   :-./ymNN-      .  /+md: ‘‘  smm/    sMhs/.-:    GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN
+    ‘:::-+/       +   --:..     +o/     /o---‘     https://vietanhdev.com 
+        ‘y      ‘o+              -s/--.  :/‘
+        /:    .// ‘‘     ‘oo:-:-  -/::--.--
+      ‘+:‘/o///o     ‘‘  .s‘y+- -.    +           #### Some packages inside:
+      -/:/‘h  ‘y     ‘ ‘.‘  ‘ .‘    ‘/:           - Theme: monokai
+           h   -+       .+        .:s‘            - Autocomplete: helm, company, yasnippet, autopair
+           y‘   :y:‘     ./-‘  .-:/://            - Realtime error checking: flycheck
+           -o    ‘y‘       ‘:::.‘‘‘o              - UX: sumlimity, neotree, all-the-icons
+            -/    .+y/ ‘    :o+ss/-.
+             ‘:.    s+sd:    ‘ .+ 
+               ‘.   ‘+ddd-   ./:/
+                     .+/:Ns/dNN:
+                     ‘‘ ooNmMNMMm/‘
+                          .+//:/:‘ 
 ~~~
-
-
-#### Some packages inside:
-
-- Theme: monokai
-- Autocomplete: helm, company, yasnippet, autopair
-- Realtime error checking: flycheck
-- UX: sumlimity, neotree, all-the-icons
 
 #### For Vietnamese input method:
 
@@ -70,10 +73,10 @@ https://vietanhdev.com
 
 ;;; smooth-scoll and attractive mode
 (use-package sublimity
-  :config (progn
-	    (use-package sublimity-scroll)
-	    (use-package sublimity-attractive))
-  :init (sublimity-mode 1))
+  :init (progn
+	    (require 'sublimity-scroll)
+	    (require 'sublimity-attractive))
+  :config (sublimity-mode 1))
 
 ;;; fontset
 (set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
@@ -87,7 +90,7 @@ https://vietanhdev.com
 
 ;;; load theme
 (use-package monokai-theme
-  :init (load-theme 'monokai t))
+  :config (load-theme 'monokai t))
 
 ;;; load icons
 (use-package all-the-icons)
@@ -106,7 +109,7 @@ https://vietanhdev.com
 
 ;;; dir. tree view
 (use-package neotree
- :init (progn
+ :config (progn
 	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
  :bind ("C-x n o" . neotree-toggle))
 
@@ -124,7 +127,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;; switch buffer
 (use-package key-chord
-  :init
+  :config
   (progn
     (key-chord-mode 1)
     (key-chord-define-global "jj" 'switch-to-previous-buffer)
@@ -147,12 +150,12 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;; snippets
 (use-package yasnippet
   :defer t
-  :init (yas-global-mode 1))
+  :config (yas-global-mode 1))
 
 ;;; autocomplete code
 (use-package company
   :defer t
-  :init (global-company-mode t))
+  :config (global-company-mode t))
 
 
 ;;; Helm autocomplete framework for autocomplete everything
@@ -161,8 +164,8 @@ Repeated invocations toggle between the two most recently open buffers."
   :diminish helm-mode
   :init
   (progn
-    (use-package helm)
-    (use-package helm-config)
+    (require 'helm)
+    (require 'helm-config)
     (setq helm-yas-display-key-on-candidate t
 	  helm-autoresize-mode 1
 	  helm-autoresize-max-height 40
@@ -216,7 +219,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; AUTO PAIR QUOTES, BRACES ...
 (use-package autopair
-  :init
+  :config
   (progn
     (autopair-global-mode 1)
     (setq autopair-autowrap t)))
@@ -234,22 +237,35 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; FLYCHECK  - REALTIME ERROR CHECKING
 (use-package flycheck
-  :ensure t
-  :init
+  :config
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
 )
 
 ;;;;; MARKDOWN MODE
 (use-package markdown-mode
-  :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :config (setq markdown-command "multimarkdown"))
 
 ;;;;; YAML MODE
 (add-hook 'yaml-mode-hook
         (lambda ()
 	  (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (markdown-mode flycheck multiple-cursors autopair helm-swoop helm company yasnippet key-chord neotree all-the-icons monokai-theme sublimity use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
