@@ -44,3 +44,7 @@ rm -r ~/.emacs.d/elpa/
 
 - Use C-\ and type ‘vietnamese-telex‘ / ‘vietnamese-viqr‘ / ‘vietnamese-vni‘ .
 - Use C-\ to toggle input method.
+
+#### Screenshot
+
+![Emacs](screenshot/screenshot.png)
