@@ -111,7 +111,6 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 
 
 ;;;;; SHORTCUT KEYS
-(global-set-key (kbd "C-c j") 'goto-line) 
 (global-set-key [f5] 'compile)
 
 ;;;;; MANAGE BUFFER
@@ -125,9 +124,11 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package key-chord
   :config
   (progn
-    (key-chord-mode 1)
-    (key-chord-define-global "jj" 'switch-to-previous-buffer)
-    (key-chord-define-global "kk" 'next-buffer)))
+  (key-chord-mode 1)
+  (key-chord-define-global "jj" 'switch-to-previous-buffer)
+  (key-chord-define-global "kk" 'next-buffer))
+  (key-chord-define-global "gg" 'goto-line)
+  (key-chord-define-global "xx" 'kill-buffer))
 
 ;;; mover between windows
 (global-set-key (kbd "C-c <left>")  'windmove-left)
