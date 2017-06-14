@@ -1,5 +1,3 @@
-
-
 "
 *** EMACS CONFIGURATION ***
  Name:  VAEmacs 0.1 2017.06.11
