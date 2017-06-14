@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "autopair" "autopair.el" (22847 65018 0 0))
+;;;### (autoloads nil "autopair" "autopair.el" (22848 7243 0 0))
 ;;; Generated autoloads from autopair.el
 
 (autoload 'autopair-mode "autopair" "\

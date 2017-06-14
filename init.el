@@ -1,3 +1,5 @@
+
+
 "
 *** EMACS CONFIGURATION ***
  Name:  VAEmacs 0.1 2017.06.11
@@ -8,6 +10,14 @@
 - For Vietnamese input method:
     use C-\ > type 'vietnamese-telex' or the method you prefer. > Use C-\ to toggle input method.
 "
+
+;;; Decrease the number of garbage collection invocations
+(setq gc-cons-threshold 10000000)
+(add-hook 'emacs-startup-hook 'my/set-gc-threshold)
+(defun my/set-gc-threshold ()
+  "Reset `gc-cons-threshold' to its default value."
+  (setq gc-cons-threshold 800000))
+
 
 ;;;;; MAXIMIZE WINDOWS ON START
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -147,75 +157,48 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;;;; AUTOCOMPLETE
 
-;;; snippets
+(use-package emmet-mode
+  :defer t
+  :init
+  (add-hook 'css-mode-hook 'emmet-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  :config
+  (setq-default emmet-move-cursor-between-quote t)
+  :bind ("<C-return>" . emmet-expand-yas)
+  )
+
 (use-package yasnippet
   :defer t
-  :config (yas-global-mode 1))
+  :init
+  (yas-global-mode 1))
 
 ;;; autocomplete code
 (use-package company
-  :defer t
   :config (global-company-mode t))
 
-
-;;; Helm autocomplete framework for autocomplete everything
-(use-package helm
-  :defer t
-  :diminish helm-mode
+(use-package counsel
+  :config (ivy-mode 1)
   :init
   (progn
-    (require 'helm)
-    (require 'helm-config)
-    (setq helm-yas-display-key-on-candidate t
-	  helm-autoresize-mode 1
-	  helm-autoresize-max-height 40
-	  helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
-	  helm-buffers-fuzzy-matching t
-	  helm-recentf-fuzzy-match    t
-	  helm-semantic-fuzzy-match t
-	  helm-imenu-fuzzy-match    t )
-    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-    (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-    ;;; for helm swoop
-    (use-package helm-swoop)
-    (setq helm-swoop-pre-input-function
-        (lambda () nil))
-
-    ;;; C-s in helm-swoop with empty search field: activate previous search.
-    ;;; C-s in helm-swoop with non-empty search field: go to next match.
-    (with-eval-after-load 'helm-swoop
-        (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
-
-    (defun tl/helm-swoop-C-s ()
-        (interactive)
-        (if (boundp 'helm-swoop-pattern)
-            (if (equal helm-swoop-pattern "")
-                    (previous-history-element 1)
-                (helm-next-line))
-        (helm-next-line)
-	)))
-
-    ;;; backspace two times to return to previous folder
-    (defun fu/helm-find-files-navigate-back (orig-fun &rest args)
-      (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
-        (helm-find-files-up-one-level 1)
-        (apply orig-fun args)))
-        (advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
-
-  
-  :bind (("C-c h" . helm-command-prefix)
-	 ("C-i" . helm-execute-persistent-action)
-	 ("C-z" . helm-select-action)
-	 ("M-x" . helm-M-x) ; use Helm for searching commands
-	 ("M-y" . helm-show-kill-ring) ; show kill-ring (deleted items)
-	 ("C-x b" . helm-mini) ; manage buffers
-	 ("C-x C-f" . helm-find-files) ; open files
-	 ("C-s" . helm-swoop)
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    (global-set-key "\C-s" 'swiper)
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+    (global-set-key (kbd "<f6>") 'ivy-resume)
+    ;(global-set-key (kbd "M-x") 'counsel-M-x)
+    (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+    (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+    (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+    (global-set-key (kbd "<f1> l") 'counsel-find-library)
+    (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+    (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+    (global-set-key (kbd "C-c g") 'counsel-git)
+    (global-set-key (kbd "C-c j") 'counsel-git-grep)
+    (global-set-key (kbd "C-c k") 'counsel-ag)
+    (global-set-key (kbd "C-x l") 'counsel-locate)
+    (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
   )
-)
-
 
 ;;;;; AUTO PAIR QUOTES, BRACES ...
 (use-package autopair
@@ -240,7 +223,17 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
-)
+  )
+
+
+
+;;;;; FOR WEB DEVELOPMENT
+
+;;;;; RAINBOW MODE - COLOR FOR HTML/CSS
+(use-package rainbow-mode
+  :init
+  (add-hook 'html-mode-hook 'rainbow-mode)
+  (add-hook 'css-mode-hook 'rainbow-mode))
 
 ;;;;; MARKDOWN MODE
 (use-package markdown-mode
@@ -255,6 +248,62 @@ Repeated invocations toggle between the two most recently open buffers."
         (lambda ()
 	  (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
+;;;;; WEB-MODE
+
+;;; js2-mode
+(use-package js2-mode)
+(use-package web-mode
+  :init
+  (progn
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+  
+  (setq web-mode-enable-auto-pairing t
+     web-mode-enable-css-colorization t
+     web-mode-enable-current-element-highlight t)
+  ))
+
+
+;;;;; BEAUTIFY
+(use-package web-beautify
+   :init
+  (progn
+     (eval-after-load 'js2-mode
+       '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
+     ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+     (eval-after-load 'js
+       '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
+     
+     (eval-after-load 'json-mode
+       '(define-key json-mode-map (kbd "C-c b") 'web-beautify-js))
+     
+     (eval-after-load 'sgml-mode
+       '(define-key html-mode-map (kbd "C-c b") 'web-beautify-html))
+     
+     (eval-after-load 'web-mode
+       '(define-key web-mode-map (kbd "C-c b") 'web-beautify-html))
+   
+     (eval-after-load 'css-mode
+       '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
+     )
+  )
+
+;;;;; skewer-mode
+(use-package skewer-mode)
+
+;;;;; Ruby
+(use-package rvm
+  :init (rvm-use-default) ;; use rvm's default ruby for the current Emacs session
+  )
+
+(use-package robe)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -262,7 +311,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (markdown-mode flycheck multiple-cursors autopair helm-swoop helm company yasnippet key-chord neotree all-the-icons monokai-theme sublimity use-package))))
+    (hippie-exp-ext robe rvm skewer-mode web-beautify yasnippet web-mode use-package sublimity rainbow-mode neotree multiple-cursors monokai-theme markdown-mode key-chord js2-mode helm-swoop helm-fuzzy-find flycheck emmet-mode counsel company autopair all-the-icons))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
