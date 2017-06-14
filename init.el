@@ -38,37 +38,32 @@
 
 
 (setq initial-scratch-message "
+
+
 ~~~
-‘------::--‘                ‘-------.‘      
-   ‘::::yyyosos+:--:/          .:--:/oooyso-::     ######## ##     ##    ###     ######   ######
-  -/-sNy/::-.‘‘.---.            ...--..--:odh:/.   ##       ###   ###   ## ##   ##    ## ##    ##
- -:‘hNo:-        .-------‘ ‘----...       ::dm.:.  ##       #### ####  ##   ##  ##       ##
- + :Nd/.       --:ohmNmdo:/yosdmds:-.      :+Mo /  ######   ## ### ## ##     ## ##        ######
- / oMy+      -::hMMMMMMMMN. + +mMMMh::‘    -/Nh +  ##       ##     ## ######### ##             ##
- + /Nd/-   ./:yNmmhsooso:-:. --:shydNo:-   /+No +  ##       ##     ## ##     ## ##    ## ##    ##
- +‘.dNy::-/oyy/‘  ‘/oh‘  -/‘-s‘/+:. .yms+-/omN-‘+  ######## ##     ## ##     ##  ######   ######
- ‘+‘+mMNmyNm:    ‘/‘/.‘.-- :  .d-‘/   +MMmMNm+./
-   :-./ymNN-      .  /+md: ‘‘  smm/    sMhs/.-:    GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN
-    ‘:::-+/       +   --:..     +o/     /o---‘     https://vietanhdev.com 
-        ‘y      ‘o+              -s/--.  :/‘
-        /:    .// ‘‘     ‘oo:-:-  -/::--.--
-      ‘+:‘/o///o     ‘‘  .s‘y+- -.    +           #### Some packages inside:
-      -/:/‘h  ‘y     ‘ ‘.‘  ‘ .‘    ‘/:           - Theme: monokai
-           h   -+       .+        .:s‘            - Autocomplete: ivy, company, yasnippet, autopair
-           y‘   :y:‘     ./-‘  .-:/://            - Realtime error checking: flycheck
-           -o    ‘y‘       ‘:::.‘‘‘o              - UX: neotree, all-the-icons
-            -/    .+y/ ‘    :o+ss/-.
-             ‘:.    s+sd:    ‘ .+ 
-               ‘.   ‘+ddd-   ./:/
-                     .+/:Ns/dNN:
-                     ‘‘ ooNmMNMMm/‘
-                          .+//:/:‘ 
-~~~
+
+######## ##     ##    ###     ######   ######
+##       ###   ###   ## ##   ##    ## ##    ##
+##       #### ####  ##   ##  ##       ##
+######   ## ### ## ##     ## ##        ######
+##       ##     ## ######### ##             ##
+##       ##     ## ##     ## ##    ## ##    ##
+######## ##     ## ##     ##  ######   ######
+
+GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com 
+  
+ ~~~
+
+#### Some packages inside:
+  - Theme: monokai
+  - Autocomplete: ivy, company, yasnippet, autopair
+  - Realtime error checking: flycheck
+  - UX: neotree, all-the-icons
 
 #### For Vietnamese input method:
 
-- Use C-\\ and type ‘vietnamese-telex‘ / ‘vietnamese-viqr‘ / ‘vietnamese-vni‘
-- Use C-\\ to toggle input method.
+  - Use C-\\ and type ‘vietnamese-telex‘ / ‘vietnamese-viqr‘ / ‘vietnamese-vni‘
+  - Use C-\\ to toggle input method.
 
 ")
 
