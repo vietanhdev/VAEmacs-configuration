@@ -54,9 +54,9 @@
         /:    .// ‘‘     ‘oo:-:-  -/::--.--
       ‘+:‘/o///o     ‘‘  .s‘y+- -.    +           #### Some packages inside:
       -/:/‘h  ‘y     ‘ ‘.‘  ‘ .‘    ‘/:           - Theme: monokai
-           h   -+       .+        .:s‘            - Autocomplete: helm, company, yasnippet, autopair
+           h   -+       .+        .:s‘            - Autocomplete: ivy, company, yasnippet, autopair
            y‘   :y:‘     ./-‘  .-:/://            - Realtime error checking: flycheck
-           -o    ‘y‘       ‘:::.‘‘‘o              - UX: sumlimity, neotree, all-the-icons
+           -o    ‘y‘       ‘:::.‘‘‘o              - UX: neotree, all-the-icons
             -/    .+y/ ‘    :o+ss/-.
              ‘:.    s+sd:    ‘ .+ 
                ‘.   ‘+ddd-   ./:/
@@ -80,13 +80,6 @@
 
 ;;; confirm y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;;; smooth-scoll and attractive mode
-(use-package sublimity
-  :init (progn
-	    (require 'sublimity-scroll)
-	    (require 'sublimity-attractive))
-  :config (sublimity-mode 1))
 
 ;;; fontset
 (set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
@@ -277,7 +270,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (progn
      (eval-after-load 'js2-mode
        '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
-     ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+ 
      (eval-after-load 'js
        '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
      
@@ -311,7 +304,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (hippie-exp-ext robe rvm skewer-mode web-beautify yasnippet web-mode use-package sublimity rainbow-mode neotree multiple-cursors monokai-theme markdown-mode key-chord js2-mode helm-swoop helm-fuzzy-find flycheck emmet-mode counsel company autopair all-the-icons))))
+    (robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -16,9 +16,9 @@
 #### Some packages inside:
 
 - Theme: monokai
-- Autocomplete: helm, company, yasnippet, autopair
+- Autocomplete: ivy, company, yasnippet, autopair
 - Realtime error checking: flycheck
-- UX: sumlimity, neotree, all-the-icons
+- UI: neotree, all-the-icons
 
 #### Installation:
 

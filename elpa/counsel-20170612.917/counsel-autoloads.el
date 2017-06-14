@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "counsel" "counsel.el" (22849 16237 0 0))
+;;;### (autoloads nil "counsel" "counsel.el" (22849 18671 0 0))
 ;;; Generated autoloads from counsel.el
 
 (autoload 'counsel-el "counsel" "\
@@ -346,10 +346,6 @@ mode remaps built-in emacs functions that have counsel
 replacements. 
 
 \(fn &optional ARG)" t nil)
-
-;;;***
-
-;;;### (autoloads nil nil ("counsel-pkg.el") (22849 16205 0 0))
 
 ;;;***
 
