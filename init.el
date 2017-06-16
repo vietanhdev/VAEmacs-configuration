@@ -296,3 +296,17 @@ Repeated invocations toggle between the two most recently open buffers."
   :init (rvm-use-default) ;; use rvm's default ruby for the current Emacs session
   )
 (use-package robe)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
