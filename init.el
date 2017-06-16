@@ -96,6 +96,12 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 (add-hook 'prog-mode-hook 'linum-mode)
 (setq linum-format "%4d \u2502 ")
 
+
+;;; display paren
+(show-paren-mode 1)
+(setq show-paren-delay 0)
+
+
 ;; zoom in/ zoom out
 (global-set-key (kbd "C-x C-+") 'text-scale-increase)
 (global-set-key (kbd "C-x C--") 'text-scale-decrease)
@@ -128,6 +134,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (key-chord-define-global "jj" 'switch-to-previous-buffer)
   (key-chord-define-global "kk" 'next-buffer))
   (key-chord-define-global "gg" 'goto-line)
+  (key-chord-define-global "nn" 'other-window)
   (key-chord-define-global "xx" 'kill-buffer))
 
 ;;; mover between windows
@@ -213,7 +220,6 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 
 
-
 ;;;;; FOR WEB DEVELOPMENT
 
 ;;;;; RAINBOW MODE - COLOR FOR HTML/CSS
@@ -289,19 +295,4 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package rvm
   :init (rvm-use-default) ;; use rvm's default ruby for the current Emacs session
   )
-
 (use-package robe)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
