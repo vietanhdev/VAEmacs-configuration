@@ -28,17 +28,7 @@ rm ~/.emacs
 git clone https://github.com/vietanhdev/VAEmacs-configuration.git ~/.emacs.d
 ~~~
 
-#### If you want to re-install all the packages (not recommended):
-
-- Delete `~/.emacs.d/elpa/` folder.
-
-~~~ bash
-rm -r ~/.emacs.d/elpa/
-~~~
-
-- Open Emacs, `M-x` type `package-install <RET> use-package <RET>`, wait for `use-package` to be installed.
-- Restart Emacs and wait for other packages to be installed.
-- Restart Emacs again and enjoy.
+In the first time Emacs starts, it will download all the neccessary packages to complete the configuration. Please restart Emacs after the installation.
 
 #### For Vietnamese input method:
 
