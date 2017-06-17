@@ -1,14 +1,3 @@
-"
-*** EMACS CONFIGURATION ***
- Name:  VAEmacs 0.1 2017.06.11
- By:    Viet Anh Nguyen
- Email: vietanh@vietanhdev.com
-
-*** Notice:
-- For Vietnamese input method:
-    use C-\ > type 'vietnamese-telex' or the method you prefer. > Use C-\ to toggle input method.
-"
-
 ;;; Decrease the number of garbage collection invocations
 (setq gc-cons-threshold 10000000)
 (add-hook 'emacs-startup-hook 'my/set-gc-threshold)
@@ -52,6 +41,7 @@
 ######## ##     ## ##     ##  ######   ######
 
 GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com 
+Version 0.1.1 2017-07-17
   
  ~~~
 
