@@ -61,6 +61,10 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 (setq initial-major-mode 'markdown-mode)
 
 
+;;;;; EDIT FILE REMOTELY
+(setq tramp-default-method "ssh")
+
+
 ;;;;; EMACS UI
 
 ;;; confirm y/n instead of yes/no
@@ -70,6 +74,8 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 (set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
 (set-frame-font "DejaVu Sans Mono 16" nil t)
 (set-face-attribute 'default (selected-frame) :height 160)
+(setq tab-width 4)
+(setq ruby-indent-level 4)
 
 ;;; turn off menubar, toolbar, scollbar
 ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -86,7 +92,7 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 
 ;;; display line number when programming
 (add-hook 'prog-mode-hook 'linum-mode)
-(setq linum-format "%4d \u2502 ")
+(setq linum-format "%4d \u2502")
 
 
 ;;; display paren
@@ -117,6 +123,26 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+
+;;;; Toggle comment func.
+(defun xah-comment-dwim ()
+  "Like `comment-dwim', but toggle comment if cursor is not at end of line."
+  (interactive)
+  (if (region-active-p)
+      (comment-dwim nil)
+    (let ((-lbp (line-beginning-position))
+          (-lep (line-end-position)))
+      (if (eq -lbp -lep)
+          (progn
+            (comment-dwim nil))
+        (if (eq (point) -lep)
+            (progn
+              (comment-dwim nil))
+          (progn
+            (comment-or-uncomment-region -lbp -lep)
+            (forward-line )))))))
+(global-set-key (kbd "C-c c") 'xah-comment-dwim)
 
 ;;; switch buffer
 (use-package key-chord
@@ -288,6 +314,11 @@ Repeated invocations toggle between the two most recently open buffers."
   :init (rvm-use-default) ;; use rvm's default ruby for the current Emacs session
   )
 (use-package robe)
+
+;;;;; Angular 2/4
+(use-package ng2-mode)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -295,7 +326,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
+    (ng2-mode robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
