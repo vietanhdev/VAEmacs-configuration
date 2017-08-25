@@ -66,6 +66,13 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
 
 ;;;;; EMACS UI
 
+;;; SmoothScrolling
+(load "~/.emacs.d/el-packages/smooth-scroll.el")
+(smooth-scroll-mode 1)
+
+
+
+
 ;;; confirm y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
