@@ -1,3 +1,7 @@
+;;;; EMACS CONFIGURATION FILE
+;; Author: Viet Anh Nguyen (vietanh@vietanhdev.com)
+;; Website: vietanhdev.com
+
 ;;; Decrease the number of garbage collection invocations
 (setq gc-cons-threshold 10000000)
 (add-hook 'emacs-startup-hook 'my/set-gc-threshold)
@@ -39,7 +43,7 @@
 ##       ##     ## ##     ## ##    ## ##    ##
 ######## ##     ## ##     ##  ######   ######
 
-GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com 
+GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
   
  ~~~
 
