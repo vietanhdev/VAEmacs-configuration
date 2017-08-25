@@ -32,7 +32,7 @@
 
 ;; If one package cannot be found, automatically download it.
 ;; Comment this line for faster start up Emacs.
-; (setq use-package-always-ensure t)
+(setq use-package-always-ensure t)
 ;;;; ===================================================
 
 
