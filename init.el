@@ -1,6 +1,7 @@
-;;;; EMACS CONFIGURATION FILE
+;;;; EMACS CONFIGURATION FILE ==========================
 ;; Author: Viet Anh Nguyen (vietanh@vietanhdev.com)
 ;; Website: vietanhdev.com
+;;;; ===================================================
 
 
 ;;;; SPEED UP EMACS ====================================
@@ -370,3 +371,17 @@ Repeated invocations toggle between the two most recently open buffers."
   :init (add-hook 'python-mode-hook 'anaconda-mode)
         (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
 ;;;; ===================================================
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (anoconda-mode yasnippet web-mode web-beautify use-package sublimity skewer-mode rvm robe rainbow-mode ng2-mode neotree multiple-cursors monokai-theme markdown-mode magit key-chord flycheck emmet-mode counsel company autopair anaconda-mode all-the-icons))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
