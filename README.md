@@ -43,7 +43,14 @@ M-x all-the-icons-install-fonts
 
 ### 3. Finish
 
-Restart Emacs for all functions to work correctly.
+- Restart Emacs for all functions to work correctly.
+
+- After all, Comment this line by putting `;` at the beginning of the line. This helps stop checking for the existence of packages upon startup and shoten startup time.
+
+~~~elisp
+(setq use-package-always-ensure t)
+~~~
+
 
 ## For Vietnamese input method:
 
