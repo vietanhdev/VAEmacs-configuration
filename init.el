@@ -5,7 +5,6 @@
   "Reset `gc-cons-threshold' to its default value."
   (setq gc-cons-threshold 800000))
 
-
 ;;;;; MAXIMIZE WINDOWS ON START
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -112,6 +111,10 @@ GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
  :config (progn
 	  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
  :bind ("C-x n o" . neotree-toggle))
+
+
+;;; Git - Magit
+(use-package magit)
 
 
 ;;;;; SHORTCUT KEYS
@@ -246,7 +249,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-hook 'html-mode-hook 'rainbow-mode)
   (add-hook 'css-mode-hook 'rainbow-mode))
 
-;;;;; MARKDOWN MODE
+;;;;; MARKDOWN MODE(
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
@@ -319,6 +322,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package ng2-mode)
 
 
+
+;;;;; PYTHON
+(use-package anoconda-mode
+  :init (add-hook 'python-mode-hook 'anaconda-mode)
+        (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -326,7 +336,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ng2-mode robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
+    (anaconda-mode anoconda-mode ng2-mode robe rvm skewer-mode web-beautify web-mode js2-mode markdown-mode rainbow-mode flycheck multiple-cursors autopair counsel company yasnippet emmet-mode key-chord neotree all-the-icons monokai-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
