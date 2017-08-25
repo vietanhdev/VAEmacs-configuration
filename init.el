@@ -55,15 +55,15 @@
 ##       ##     ## ##     ## ##    ## ##    ##
 ######## ##     ## ##     ##  ######   ######
 
-GNU EMACS EDITOR - CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
+GNU EMACS EMACS
+CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
   
  ~~~
 
-#### Some packages inside:
-  - Theme: monokai
-  - Autocomplete: ivy, company, yasnippet, autopair
-  - Realtime error checking: flycheck
-  - UX: neotree, all-the-icons
+#### More Info
+
+Github Repo. : https://github.com/vietanhdev/VAEmacs-configuration
+Contact Email: vietanh@vietanhdev.com
 
 #### For Vietnamese input method:
 
