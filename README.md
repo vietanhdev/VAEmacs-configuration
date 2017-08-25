@@ -19,7 +19,7 @@
 - Default font: DejaVu Sans Mono 16px. Please install this font if not available.
 - Packages:
   + Load from local: smooth-scroll
-  + Load using Elpa: use-package, diminish, bind-key, monokai-theme, all-the-icons, neotree (directory view), key-chord, autopair, multiple-cursors, magit (git integration), company, yasnippet, counsel (swiper), flycheck, markdown-mode, emmet-mode, rainbow-mode, js2-mode, web-mode, web-beautify, ng2-mode, rvm, robe, anaconda-mode.
+  + Load using Elpa: use-package, diminish, bind-key, monokai-theme, all-the-icons, neotree (directory view), key-chord, autopair, multiple-cursors, magit (git integration), company, yasnippet, counsel (swiper), flycheck, markdown-mode, emmet-mode, rainbow-mode, js2-mode, web-mode, web-beautify, ng2-mode, rvm, robe, anaconda-mode, nyan-mode.
 
 ## Installation:
 
