@@ -200,7 +200,7 @@ Repeated invocations toggle between the two most recently open buffers."
             (comment-or-uncomment-region -lbp -lep)
             (forward-line )))))))
 (global-set-key (kbd "C-c c") 'xah-comment-dwim)
-
+ 
 
 
 ;;;; ===================================================
@@ -219,22 +219,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (progn
     (autopair-global-mode 1)
     (setq autopair-autowrap t)))
-;;;; ===================================================
-
-;;;; Let cursor go offoff-screen =======================
-;; https://emacs.stackexchange.com/questions/61/let-emacs-move-the-cursor-off-screen
-(use-package scroll-restore
-  :config
-  (scroll-restore-mode 1)
-  ;; Allow scroll-restore to modify the cursor face
-  (setq scroll-restore-handle-cursor t)
-  ;; Make the cursor invisible while POINT is off-screen
-  (setq scroll-restore-cursor-type nil)
-  ;; Jump back to the original cursor position after scrolling
-  (setq scroll-restore-jump-back t)
-  ;; Toggle scroll-restore-mode with the Scroll Lock key
-  :bind ("<Scroll_Lock>" . scroll-restore-mode)
-)
 ;;;; ===================================================
 
 ;;;; MULTIPLE CURSORS ==================================
