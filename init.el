@@ -29,7 +29,6 @@
   (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
-
 ;; If one package cannot be found, automatically download it.
 ;; Comment this line for faster start up Emacs.
 (setq use-package-always-ensure t)
@@ -79,20 +78,31 @@ Contact Email: vietanh@vietanhdev.com
 
 
 ;;;; UI-UX =============================================
-;; Smooth Scrolling like other editors
-(load "~/.emacs.d/el-packages/smooth-scroll.el")
-(smooth-scroll-mode 1)
+;; Smooth Scrolling and attractive mode (look like Sublime Text)
+(use-package sublimity
+  :config
+  (require 'sublimity-scroll)
+  ;; (require 'sublimity-map) ;; experimental
+  (require 'sublimity-attractive)
+  (sublimity-mode 1)
+  )
 
+;; Word wrap
+(global-visual-line-mode t)
+
+  
 ;; Turn off menubar, toolbar, scollbar
 ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Set font, fontsize, tab-width
-;; This configuration uses "DejaVu Sans Mono" as default font. Please install this font if needed.
-(set-face-attribute 'default nil :font "DejaVu Sans Mono 16")
-(set-frame-font "DejaVu Sans Mono 16" nil t)
-(set-face-attribute 'default (selected-frame) :height 160)
+;; This configuration use "Source Code Pro" as default font. Please install this font if needed.
+(set-face-attribute 'default nil
+                    :family "Source Code Pro"
+                    :height 160
+                    :weight 'normal
+                    :width 'normal)
 (setq tab-width 4)
 (setq ruby-indent-level 4)
 
@@ -211,6 +221,21 @@ Repeated invocations toggle between the two most recently open buffers."
     (setq autopair-autowrap t)))
 ;;;; ===================================================
 
+;;;; Let cursor go offoff-screen =======================
+;; https://emacs.stackexchange.com/questions/61/let-emacs-move-the-cursor-off-screen
+(use-package scroll-restore
+  :config
+  (scroll-restore-mode 1)
+  ;; Allow scroll-restore to modify the cursor face
+  (setq scroll-restore-handle-cursor t)
+  ;; Make the cursor invisible while POINT is off-screen
+  (setq scroll-restore-cursor-type nil)
+  ;; Jump back to the original cursor position after scrolling
+  (setq scroll-restore-jump-back t)
+  ;; Toggle scroll-restore-mode with the Scroll Lock key
+  :bind ("<Scroll_Lock>" . scroll-restore-mode)
+)
+;;;; ===================================================
 
 ;;;; MULTIPLE CURSORS ==================================
 (use-package multiple-cursors
@@ -237,10 +262,10 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; Snippets
 (use-package yasnippet
   :defer t
-  :init
+  :init 
   (yas-global-mode 1))
 
-;; Replace default completion frontend with cousel package (Swiper)
+;; Replace default completion frontend with Ivy
 ;; https://github.com/abo-abo/swiper
 (use-package counsel
   :config (ivy-mode 1)
@@ -379,3 +404,17 @@ Repeated invocations toggle between the two most recently open buffers."
   :init (add-hook 'python-mode-hook 'anaconda-mode)
         (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
 ;;;; ===================================================
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (exec-path-from-shell yasnippet web-mode web-beautify use-package telephone-line sublimity spaceline skewer-mode rvm robe rainbow-mode nyan-mode ng2-mode neotree multiple-cursors monokai-theme markdown-mode magit key-chord flycheck emmet-mode counsel company autopair anaconda-mode all-the-icons))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
