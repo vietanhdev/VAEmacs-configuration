@@ -60,3 +60,5 @@ M-x all-the-icons-install-fonts
 ## Screenshot
 
 ![Emacs](screenshot/screenshot.png)
+
+![Emacs](screenshot/screenshot2.png)
