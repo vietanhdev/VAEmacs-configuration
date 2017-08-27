@@ -54,7 +54,7 @@
 ##       ##     ## ##     ## ##    ## ##    ##
 ######## ##     ## ##     ##  ######   ######
 
-GNU EMACS EMACS
+GNU EMACS
 CONFIGURATION BY VIET-ANH NGUYEN   https://vietanhdev.com
   
  ~~~
